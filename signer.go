@@ -13,31 +13,36 @@ type Signature struct {
 	Secret string
 }
 
-// GenerateTokenFromString generates a signed token and returns it
-func (s *Signature) GenerateTokenFromString(data string) string {
+// SignURL generates a signed url and returns it, stripping off http:// and https://
+func (s *Signature) SignURL(data string) string {
 	var urlToSign string
+
+	exploded := strings.Split(data, "//")
 
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
 
-	if strings.Contains(data, "?") {
+	if strings.Contains(exploded[1], "?") {
 		// handle case where URL contains query parameters
-		urlToSign = fmt.Sprintf("%s&hash=", data)
+		urlToSign = fmt.Sprintf("%s&hash=", exploded[1])
 	} else {
 		// no query parameters
-		urlToSign = fmt.Sprintf("%s?hash=", data)
+		urlToSign = fmt.Sprintf("%s?hash=", exploded[1])
 	}
 
 	tokenBytes := pen.Sign([]byte(urlToSign))
 	token := string(tokenBytes)
 
-	return token
+	return fmt.Sprintf("%s//%s", exploded[0], token)
 }
 
-// VerifyToken verifies a signed token and returns true if it is valid,
-// false if it is not.
-func (s *Signature) VerifyToken(token string) bool {
+// VerifyURL verifies a signed url and returns true if it is valid,
+// false if it is not. Note that http:// and https:// are stripped off
+// before verification
+func (s *Signature) VerifyURL(data string) bool {
+	exploded := strings.Split(data, "//")
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
-	_, err := pen.Unsign([]byte(token))
+
+	_, err := pen.Unsign([]byte(exploded[1]))
 
 	if err != nil {
 		// signature is not valid. Token was tampered with, forged, or maybe it's
@@ -52,9 +57,11 @@ func (s *Signature) VerifyToken(token string) bool {
 
 // Expired checks to see if a token has expired. It returns true if
 // the token was created within minutesUntilExpire, and false otherwise.
-func (s *Signature) Expired(token string, minutesUntilExpire int) bool {
+func (s *Signature) Expired(data string, minutesUntilExpire int) bool {
+	exploded := strings.Split(data, "//")
+
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
-	ts := pen.Parse([]byte(token))
+	ts := pen.Parse([]byte(exploded[1]))
 
 	return time.Since(ts.Timestamp) > time.Duration(minutesUntilExpire)*time.Minute
 }
