@@ -8,7 +8,7 @@ import (
 )
 
 // Signature is the type for the package. Secret is the signer secret, a lengthy
-// and hard to guess string we use to sign things.
+// and hard to guess string we use to sign things. The secret must not exceed 64 characters.
 type Signature struct {
 	Secret string
 }
