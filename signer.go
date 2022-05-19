@@ -18,9 +18,12 @@ func (s *Signature) GenerateTokenFromString(data string) string {
 	var urlToSign string
 
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
+
 	if strings.Contains(data, "?") {
+		// handle case where URL contains query parameters
 		urlToSign = fmt.Sprintf("%s&hash=", data)
 	} else {
+		// no query parameters
 		urlToSign = fmt.Sprintf("%s?hash=", data)
 	}
 
