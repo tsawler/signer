@@ -3,7 +3,6 @@ package signer
 import (
 	"fmt"
 	goalone "github.com/bwmarrin/go-alone"
-	"log"
 	"strings"
 	"time"
 )
@@ -33,8 +32,6 @@ func (s *Signature) SignURL(data string) string {
 		// no query parameters
 		urlToSign = fmt.Sprintf("%s?hash=", stringToSign)
 	}
-
-	log.Println("signing:", stringToSign)
 
 	tokenBytes := pen.Sign([]byte(urlToSign))
 	token := string(tokenBytes)
