@@ -41,6 +41,7 @@ func (s *Signature) VerifyToken(token string) bool {
 		// not even a token at all! Either way, it's not safe to use it.
 		return false
 	}
+
 	// valid hash
 	return true
 
@@ -52,6 +53,5 @@ func (s *Signature) Expired(token string, minutesUntilExpire int) bool {
 	str := goalone.New([]byte(s.Secret), goalone.Timestamp)
 	ts := str.Parse([]byte(token))
 
-	// time.Duration(seconds)*time.Second
 	return time.Since(ts.Timestamp) > time.Duration(minutesUntilExpire)*time.Minute
 }
