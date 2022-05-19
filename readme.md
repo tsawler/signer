@@ -8,7 +8,7 @@ tamper-proof.
 
 ## Installation
 
-`go get github.com/tsawler/signer@latest`
+`go get github.com/tsawler/signer/v2`
 
 ## Usage
 
