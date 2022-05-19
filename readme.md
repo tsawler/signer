@@ -33,6 +33,9 @@ func main() {
 	// a particular site.
 	signed := sign.SignURL("http://example.com/test?id=1")
 	fmt.Println("Signed url:", signed)
+	
+	// output is http://example.com/test?id=1&hash=.3w4TgJ.pAJWBPAO5k1cimZJ-nrRKnlvosOY1Krrp3ALf1rOAds
+
 
 	// verify that a signed URL is valid, and was  issued by this application. Here, 
 	// valid is true if the URL has a valid signature, and false if it is not.
