@@ -5,7 +5,7 @@ Signer is a simple package that makes signing URLs painless. It uses
 
 ## Installation
 
-`go get -u github.com/tsawler/signer`
+`go get github.com/tsawler/signer@latest`
 
 ## Usage
 
