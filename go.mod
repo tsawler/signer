@@ -1,4 +1,4 @@
-module signer
+module githug.com/tsawler/signer
 
 go 1.18
 
