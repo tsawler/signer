@@ -3,6 +3,7 @@ package signer
 import (
 	"fmt"
 	goalone "github.com/bwmarrin/go-alone"
+	"log"
 	"strings"
 	"time"
 )
@@ -17,32 +18,42 @@ type Signature struct {
 func (s *Signature) SignURL(data string) string {
 	var urlToSign string
 
-	exploded := strings.Split(data, "//")
+	ex := strings.Split(data, "//")
+	exploded := strings.Split(ex[1], "/")
+	domain := exploded[0]
+	exploded[0] = ""
+	stringToSign := strings.Join(exploded, "")
 
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
 
-	if strings.Contains(exploded[1], "?") {
+	if strings.Contains(stringToSign, "?") {
 		// handle case where URL contains query parameters
-		urlToSign = fmt.Sprintf("%s&hash=", exploded[1])
+		urlToSign = fmt.Sprintf("%s&hash=", stringToSign)
 	} else {
 		// no query parameters
-		urlToSign = fmt.Sprintf("%s?hash=", exploded[1])
+		urlToSign = fmt.Sprintf("%s?hash=", stringToSign)
 	}
+
+	log.Println("signing:", stringToSign)
 
 	tokenBytes := pen.Sign([]byte(urlToSign))
 	token := string(tokenBytes)
 
-	return fmt.Sprintf("%s//%s", exploded[0], token)
+	return fmt.Sprintf("%s//%s/%s", ex[0], domain, token)
 }
 
 // VerifyURL verifies a signed url and returns true if it is valid,
 // false if it is not. Note that http:// and https:// are stripped off
 // before verification
 func (s *Signature) VerifyURL(data string) bool {
-	exploded := strings.Split(data, "//")
+	ex := strings.Split(data, "//")
+	exploded := strings.Split(ex[1], "/")
+	exploded[0] = ""
+	stringToVerify := strings.Join(exploded, "")
+
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
 
-	_, err := pen.Unsign([]byte(exploded[1]))
+	_, err := pen.Unsign([]byte(stringToVerify))
 
 	if err != nil {
 		// signature is not valid. Token was tampered with, forged, or maybe it's
