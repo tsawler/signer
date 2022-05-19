@@ -7,41 +7,59 @@ import (
 func TestSignature_SignURL(t *testing.T) {
 	sign := Signature{Secret: "abc123"}
 
-	signed := sign.SignURL("http://example.com/test?id=1")
+	signed, err := sign.SignURL("https://example.com/test?id=1")
+	if err != nil {
+		t.Error("error validating url")
+	}
 
 	if len(signed) == 0 {
 		t.Error("signing failed")
 	}
 
-	signed = sign.SignURL("http://example.com/test")
+	signed, _ = sign.SignURL("https://example.com/test")
 
 	if len(signed) == 0 {
 		t.Error("signing failed")
+	}
+
+	_, err = sign.SignURL("not a url")
+	if err == nil {
+		t.Error("invalid url did not throw an error")
 	}
 }
 
 func TestSignature_VerifyToken(t *testing.T) {
 	sign := Signature{Secret: "abc123"}
 
-	signed := sign.SignURL("http://example.com/test?id=1")
+	signed, _ := sign.SignURL("https://example.com/test?id=1")
 
-	valid := sign.VerifyURL(signed)
-
+	valid, err := sign.VerifyURL(signed)
+	if err != nil {
+		t.Error("error when validating url")
+	}
 	if !valid {
 		t.Error("valid token shows as invalid")
 	}
 
-	valid = sign.VerifyURL("http://www.baddomain.com/some/url")
-
+	valid, err = sign.VerifyURL("https://www.example.com/some/url")
 	if valid {
 		t.Error("invalid token shows as valid")
+	}
+
+	valid, err = sign.VerifyURL("not a url")
+	if err == nil {
+		t.Error("no error when validating non-url")
+	}
+	if valid {
+		t.Error("returned valid on non url")
 	}
 }
 
 func TestSignature_Expired(t *testing.T) {
 	sign := Signature{Secret: "abc123"}
 
-	signed := sign.SignURL("http://example.com/test?id=1")
+	signed, _ := sign.SignURL("http://example.com/test?id=1")
+
 	expired := sign.Expired(signed, 1)
 
 	if expired {

@@ -3,6 +3,7 @@ package signer
 import (
 	"fmt"
 	goalone "github.com/bwmarrin/go-alone"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -14,7 +15,13 @@ type Signature struct {
 }
 
 // SignURL generates a signed url and returns it, stripping off http:// and https://
-func (s *Signature) SignURL(data string) string {
+func (s *Signature) SignURL(data string) (string, error) {
+	// verify this is a url
+	_, err := url.ParseRequestURI(data)
+	if err != nil {
+		return "", err
+	}
+
 	var urlToSign string
 
 	ex := strings.Split(data, "//")
@@ -36,13 +43,17 @@ func (s *Signature) SignURL(data string) string {
 	tokenBytes := pen.Sign([]byte(urlToSign))
 	token := string(tokenBytes)
 
-	return fmt.Sprintf("%s//%s/%s", ex[0], domain, token)
+	return fmt.Sprintf("%s//%s/%s", ex[0], domain, token), nil
 }
 
 // VerifyURL verifies a signed url and returns true if it is valid,
 // false if it is not. Note that http:// and https:// are stripped off
 // before verification
-func (s *Signature) VerifyURL(data string) bool {
+func (s *Signature) VerifyURL(data string) (bool, error) {
+	_, err := url.ParseRequestURI(data)
+	if err != nil {
+		return false, err
+	}
 	ex := strings.Split(data, "//")
 	exploded := strings.Split(ex[1], "/")
 	exploded[0] = ""
@@ -50,16 +61,15 @@ func (s *Signature) VerifyURL(data string) bool {
 
 	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
 
-	_, err := pen.Unsign([]byte(stringToVerify))
-
+	_, err = pen.Unsign([]byte(stringToVerify))
 	if err != nil {
 		// signature is not valid. Token was tampered with, forged, or maybe it's
 		// not even a token at all! Either way, it's not safe to use it.
-		return false
+		return false, err
 	}
 
 	// valid hash
-	return true
+	return true, nil
 
 }
 
