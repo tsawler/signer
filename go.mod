@@ -1,4 +1,4 @@
-module github.com/tsawler/signer/v2
+module github.com/tsawler/signer
 
 go 1.18
 
