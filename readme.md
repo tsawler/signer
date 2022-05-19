@@ -3,6 +3,9 @@
 Signer is a simple package that makes signing URLs painless. It uses
 [github.com/bwmarrin/go-alone](https://github.com/bwmarrin/go-alone) to sign URLs.
 
+This is useful for things like sending an email with a link that can be verified, and is
+tamper-proof.
+
 ## Installation
 
 `go get github.com/tsawler/signer@latest`
