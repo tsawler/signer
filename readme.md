@@ -30,7 +30,7 @@ import (
 const secret = "somelongsecuresecret"
 
 func main() {
-	// create a variable of type Signature, and pass it a secret (<= 64 characters)
+	// Create a variable of type Signature, and pass it a secret, <= 64 characters.
 	sign, _ := signer.Signature{Secret: secret}
 
 	// Call the SignURL to get a signed version. Note that only the part after 
@@ -40,10 +40,10 @@ func main() {
 	signed, _ := sign.SignURL("http://example.com/test?id=1")
 	fmt.Println("Signed url:", signed)
 	
-	// output is something like:
+	// Output is something like:
 	// http://example.com/test?id=1&hash=.3w4TgJ.pAJWBPAO5k1cimZJ-nrRKnlvosOY1Krrp3ALf1rOAds
 	
-	// verify that a signed URL is valid, and was  issued by this application. Here, 
+	// Verify that a signed URL is valid, and was  issued by this application. Here, 
 	// valid is true if the URL has a valid signature, and false if it is not.
 	valid, _ := sign.VerifyURL(signed)
 	fmt.Println("Valid url:", valid)
