@@ -90,7 +90,7 @@ func TestSignature_VerifyToken(t *testing.T) {
 	sign := Signature{Secret: "abc123"}
 
 	for _, e := range verifyTests {
-		var signed = ""
+		var signed string
 
 		if e.validUrl {
 			signed, _ = sign.SignURL(e.url)
