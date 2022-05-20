@@ -48,7 +48,7 @@ func main() {
 	valid, _ := sign.VerifyURL(signed)
 	fmt.Println("Valid url:", valid)
 
-	// you can also check for expiry. Here, the signed url expires after 30 minutes.
+	// You can also check for expiry. Here, the signed url expires after 30 minutes.
 	expired := sign.Expired(signed, 30)
 	fmt.Println("Expired:", expired)
 }
