@@ -4,27 +4,59 @@ import (
 	"testing"
 )
 
+var signTests = []struct {
+	name     string
+	url      string
+	validUrl bool
+	hasError bool
+}{
+	{
+		name:     "signable",
+		url:      "https://example.com/test?id=1",
+		validUrl: true,
+		hasError: false,
+	},
+	{
+		name:     "signable",
+		url:      "https://example.com/test",
+		validUrl: true,
+		hasError: false,
+	},
+	{
+		name:     "empty url",
+		url:      "",
+		validUrl: false,
+		hasError: true,
+	},
+	{
+		name:     "not url",
+		url:      "fish",
+		validUrl: false,
+		hasError: true,
+	},
+}
+
 func TestSignature_SignURL(t *testing.T) {
 	sign := Signature{Secret: "abc123"}
 
-	signed, err := sign.SignURL("https://example.com/test?id=1")
-	if err != nil {
-		t.Error("error validating url")
-	}
+	for _, e := range signTests {
+		signed, err := sign.SignURL(e.url)
 
-	if len(signed) == 0 {
-		t.Error("signing failed")
-	}
+		if err == nil && e.hasError {
+			t.Errorf("%s: does not have error, and should", e.name)
+		}
 
-	signed, _ = sign.SignURL("https://example.com/test")
+		if err != nil && !e.hasError {
+			t.Errorf("%s: has error, and should not have one", e.name)
+		}
 
-	if len(signed) == 0 {
-		t.Error("signing failed")
-	}
+		if len(signed) > 0 && len(e.url) != 0 && e.validUrl && e.hasError {
+			t.Errorf("%s: failed to sign non-empty, valid url", e.name)
+		}
 
-	_, err = sign.SignURL("not a url")
-	if err == nil {
-		t.Error("invalid url did not throw an error")
+		if !e.validUrl && err == nil {
+			t.Errorf("%s: signed non valid url", e.name)
+		}
 	}
 }
 
