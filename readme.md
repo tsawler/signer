@@ -1,3 +1,8 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/tsawler/signer)](https://goreportcard.com/report/github.com/tsawler/signer)
+[![Version](https://img.shields.io/badge/goversion-1.18.x-blue.svg)](https://golang.org)
+<a href="https://golang.org"><img src="https://img.shields.io/badge/powered_by-Go-3362c2.svg?style=flat-square" alt="Built with GoLang"></a>
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/tsawler/goblender/master/LICENSE)
+
 # Signer
 
 Signer is a simple package that makes signing URLs painless. It uses
