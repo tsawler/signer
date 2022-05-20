@@ -33,14 +33,15 @@ func main() {
 	// create a variable of type Signature, and pass it a secret (<= 64 characters)
 	sign, _ := signer.Signature{Secret: secret}
 
-	// Call the SignURL to get a signed version. Note that only the part after https://somesite.com
-	// or http://somesite.com is actually signed, but you must pass the full url. This way, we 
-	// can use the package in development without worrying about the domain name of 
-	// a particular site.
+	// Call the SignURL to get a signed version. Note that only the part after 
+	// https://somesite.com or http://somesite.com is actually signed, but you 
+	// must pass the full url. This way, we can use the package in development 
+	// without worrying about the domain name of a particular site.
 	signed, _ := sign.SignURL("http://example.com/test?id=1")
 	fmt.Println("Signed url:", signed)
 	
-	// output is http://example.com/test?id=1&hash=.3w4TgJ.pAJWBPAO5k1cimZJ-nrRKnlvosOY1Krrp3ALf1rOAds
+	// output is something like:
+	// http://example.com/test?id=1&hash=.3w4TgJ.pAJWBPAO5k1cimZJ-nrRKnlvosOY1Krrp3ALf1rOAds
 	
 	// verify that a signed URL is valid, and was  issued by this application. Here, 
 	// valid is true if the URL has a valid signature, and false if it is not.
