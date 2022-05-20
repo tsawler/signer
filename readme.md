@@ -37,11 +37,11 @@ func main() {
 	// https://somesite.com or http://somesite.com is actually signed, but you 
 	// must pass the full url. This way, we can use the package in development 
 	// without worrying about the domain name of a particular site.
-	signed, _ := sign.SignURL("http://example.com/test?id=1")
+	signed, _ := sign.SignURL("https://example.com/test?id=1")
 	fmt.Println("Signed url:", signed)
 	
 	// Output is something like:
-	// http://example.com/test?id=1&hash=.3w4TgJ.pAJWBPAO5k1cimZJ-nrRKnlvosOY1Krrp3ALf1rOAds
+	// https://example.com/test?id=1&hash=.3w4TgJ.pAJWBPAO5k1cimZJ-nrRKnlvosOY1Krrp3ALf1rOAds
 	
 	// Verify that a signed URL is valid, and was  issued by this application. Here, 
 	// valid is true if the URL has a valid signature, and false if it is not.
