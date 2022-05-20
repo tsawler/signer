@@ -33,8 +33,8 @@ func main() {
 	// create a variable of type Signature, and pass it a secret (<= 64 characters)
 	sign, _ := signer.Signature{Secret: secret}
 
-	// Call the SignURL to get a signed version. Note that only the part after https:// 
-	// or http:// is actually signed, but you must pass the full url. This way, we 
+	// Call the SignURL to get a signed version. Note that only the part after https://somesite.com
+	// or http://somesite.com is actually signed, but you must pass the full url. This way, we 
 	// can use the package in development without worrying about the domain name of 
 	// a particular site.
 	signed, _ := sign.SignURL("http://example.com/test?id=1")
