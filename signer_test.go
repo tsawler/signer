@@ -11,13 +11,13 @@ var signTests = []struct {
 	hasError bool
 }{
 	{
-		name:     "signable",
+		name:     "signable query params",
 		url:      "https://example.com/test?id=1",
 		validUrl: true,
 		hasError: false,
 	},
 	{
-		name:     "signable",
+		name:     "signable no query params",
 		url:      "https://example.com/test",
 		validUrl: true,
 		hasError: false,
