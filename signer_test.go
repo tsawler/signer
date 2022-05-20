@@ -28,30 +28,55 @@ func TestSignature_SignURL(t *testing.T) {
 	}
 }
 
+var verifyTests = []struct {
+	name       string
+	url        string
+	validUrl   bool
+	shouldPass bool
+}{
+	{
+		name:       "valid url and sig",
+		url:        "https://example.com/test?id=1",
+		shouldPass: true,
+		validUrl:   true,
+	},
+	{
+		name:       "valid url and invalid sig",
+		url:        "https://www.example.com/some/url",
+		shouldPass: false,
+		validUrl:   false,
+	},
+	{
+		name:       "not a url",
+		url:        "not a url",
+		shouldPass: false,
+		validUrl:   false,
+	},
+}
+
 func TestSignature_VerifyToken(t *testing.T) {
 	sign := Signature{Secret: "abc123"}
 
-	signed, _ := sign.SignURL("https://example.com/test?id=1")
+	for _, e := range verifyTests {
+		var signed = ""
 
-	valid, err := sign.VerifyURL(signed)
-	if err != nil {
-		t.Error("error when validating url")
-	}
-	if !valid {
-		t.Error("valid token shows as invalid")
-	}
+		if e.validUrl {
+			signed, _ = sign.SignURL(e.url)
+		} else {
+			signed = e.url
+		}
 
-	valid, err = sign.VerifyURL("https://www.example.com/some/url")
-	if valid {
-		t.Error("invalid token shows as valid")
-	}
+		valid, err := sign.VerifyURL(signed)
 
-	valid, err = sign.VerifyURL("not a url")
-	if err == nil {
-		t.Error("no error when validating non-url")
-	}
-	if valid {
-		t.Error("returned valid on non url")
+		if err != nil && e.validUrl {
+			t.Errorf("%s: error when validating url %s", e.name, e.url)
+		}
+		if !valid && e.shouldPass {
+			t.Errorf("%s: valid token shows as invalid", e.name)
+		}
+		if valid && !e.validUrl {
+			t.Errorf("%s: returned valid on non url %s", e.name, e.url)
+		}
 	}
 }
 
