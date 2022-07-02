@@ -31,7 +31,7 @@ const secret = "somelongsecuresecret"
 
 func main() {
 	// Create a variable of type Signature, and pass it a secret, <= 64 characters.
-	sign, _ := signer.Signature{Secret: secret}
+	sign := signer.Signature{Secret: secret}
 
 	// Call the SignURL to get a signed version. Note that only the part after 
 	// https://somesite.com or http://somesite.com is actually signed, but you 
