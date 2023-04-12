@@ -7,7 +7,7 @@
 # Signer
 
 Signer is a simple package that makes signing URLs painless. It uses
-[github.com/bwmarrin/go-alone](https://github.com/bwmarrin/go-alone) to sign URLs.
+[github.com/tsawler/itsdangerous](https://github.com/tsawler/itsdangerous) to sign URLs.
 
 This is useful for things like sending an email with a link that can be verified, and which is
 tamper-proof.

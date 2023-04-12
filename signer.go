@@ -2,7 +2,7 @@ package signer
 
 import (
 	"fmt"
-	goalone "github.com/bwmarrin/go-alone"
+	danger "github.com/tsawler/itsdangerous"
 	"net/url"
 	"strings"
 	"time"
@@ -30,7 +30,7 @@ func (s *Signature) SignURL(data string) (string, error) {
 	exploded[0] = ""
 	stringToSign := strings.Join(exploded, "")
 
-	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
+	pen := danger.New([]byte(s.Secret), danger.Timestamp)
 
 	if strings.Contains(stringToSign, "?") {
 		// handle case where URL contains query parameters
@@ -59,7 +59,7 @@ func (s *Signature) VerifyURL(data string) (bool, error) {
 	exploded[0] = ""
 	stringToVerify := strings.Join(exploded, "")
 
-	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
+	pen := danger.New([]byte(s.Secret), danger.Timestamp)
 
 	_, err = pen.Unsign([]byte(stringToVerify))
 	if err != nil {
@@ -78,7 +78,7 @@ func (s *Signature) VerifyURL(data string) (bool, error) {
 func (s *Signature) Expired(data string, minutesUntilExpire int) bool {
 	exploded := strings.Split(data, "//")
 
-	pen := goalone.New([]byte(s.Secret), goalone.Timestamp)
+	pen := danger.New([]byte(s.Secret), danger.Timestamp)
 	ts := pen.Parse([]byte(exploded[1]))
 
 	return time.Since(ts.Timestamp) > time.Duration(minutesUntilExpire)*time.Minute
