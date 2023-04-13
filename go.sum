@@ -3,6 +3,8 @@ github.com/klauspost/cpuid/v2 v2.2.4 h1:acbojRNwl3o09bUq+yDCtZFc1aiwaAAxtcn8YkZX
 github.com/klauspost/cpuid/v2 v2.2.4/go.mod h1:RVVoqg1df56z8g3pUjL/3lE5UfnlrJX8tyFgg4nqhuY=
 github.com/tsawler/itsdangerous v1.0.0 h1:fU7X0Zs+7Ou2rdOfGPxrNA1lxSAqHpTdho5NstO3SPQ=
 github.com/tsawler/itsdangerous v1.0.0/go.mod h1:oV6RuJKMko73/wBhQ/3CQvK6wSLdJFCVNSYYbebKEQY=
+github.com/tsawler/itsdangerous v1.0.1 h1:RSaqEu6orO0Ok85KePHOpAgPgGd0GFRHWa65Vr5vdFI=
+github.com/tsawler/itsdangerous v1.0.1/go.mod h1:oV6RuJKMko73/wBhQ/3CQvK6wSLdJFCVNSYYbebKEQY=
 golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.7.0 h1:3jlCCIQZPdOYu1h8BkNvLz8Kgwtae2cagcG/VamtZRU=
 golang.org/x/sys v0.7.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
