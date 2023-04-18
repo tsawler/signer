@@ -38,3 +38,6 @@ jobs:
 
       - name: Run tests
         run: go test -race -vet=off ./...
+
+      - name: Update coverage report
+        uses: ncruces/go-coverage-report@main

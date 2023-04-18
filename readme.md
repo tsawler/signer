@@ -4,6 +4,7 @@
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/tsawler/goblender/master/LICENSE)
 ![Tests](https://github.com/tsawler/signer/actions/workflows/tests.yml/badge.svg)
 <a href="#!"><img src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
+[![Go Coverage](https://github.com/tsawler/signer/wiki/coverage.svg)](https://raw.githack.com/wiki/tsawler/signer/coverage.html)
 # Signer
 
 Signer is a simple package that makes signing URLs painless. It uses
