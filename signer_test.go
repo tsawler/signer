@@ -125,6 +125,6 @@ func TestSignature_Expired(t *testing.T) {
 
 	expired = sign.Expired(signed, -1)
 	if !expired {
-		t.Error("token shows not expired when it should be")
+		t.Error("token shows that it is not expired when it should be")
 	}
 }
