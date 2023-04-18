@@ -3,7 +3,6 @@
 <a href="https://golang.org"><img src="https://img.shields.io/badge/powered_by-Go-3362c2.svg?style=flat-square" alt="Built with GoLang"></a>
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/tsawler/goblender/master/LICENSE)
 ![Tests](https://github.com/tsawler/signer/actions/workflows/tests.yml/badge.svg)
-<a href="#!"><img src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 [![Go Coverage](https://github.com/tsawler/signer/wiki/coverage.svg)](https://raw.githack.com/wiki/tsawler/signer/coverage.html)
 # Signer
 
