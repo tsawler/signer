@@ -1,6 +1,7 @@
 package signer
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -13,6 +14,12 @@ var signTests = []struct {
 	{
 		name:     "signable query params",
 		url:      "https://example.com/test?id=1",
+		validUrl: true,
+		hasError: false,
+	},
+	{
+		name:     "signable query params",
+		url:      "https://example.com/password/reset/finish?email=my@email.com",
 		validUrl: true,
 		hasError: false,
 	},
@@ -42,6 +49,9 @@ func TestSignature_SignURL(t *testing.T) {
 	for _, e := range signTests {
 		signed, err := sign.SignURL(e.url)
 
+		if e.validUrl && !strings.Contains(signed, e.url) {
+			t.Errorf("%s: was not returned correctly", e.url)
+		}
 		if err == nil && e.hasError {
 			t.Errorf("%s: does not have error, and should", e.name)
 		}

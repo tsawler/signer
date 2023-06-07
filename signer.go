@@ -17,18 +17,17 @@ type Signature struct {
 // SignURL generates a signed url and returns it, stripping off http:// and https://
 func (s *Signature) SignURL(data string) (string, error) {
 	// verify this is a url
-	_, err := url.ParseRequestURI(data)
+	u, err := url.ParseRequestURI(data)
 	if err != nil {
 		return "", err
 	}
 
 	var urlToSign string
-
-	ex := strings.Split(data, "//")
-	exploded := strings.Split(ex[1], "/")
-	domain := exploded[0]
-	exploded[0] = ""
-	stringToSign := strings.Join(exploded, "")
+	q := ""
+	if u.RawQuery != "" {
+		q = "?"
+	}
+	stringToSign := fmt.Sprintf("%s%s%s", u.Path, q, u.RawQuery)
 
 	pen := danger.New([]byte(s.Secret), danger.Timestamp)
 
@@ -43,21 +42,22 @@ func (s *Signature) SignURL(data string) (string, error) {
 	tokenBytes := pen.Sign([]byte(urlToSign))
 	token := string(tokenBytes)
 
-	return fmt.Sprintf("%s//%s/%s", ex[0], domain, token), nil
+	return fmt.Sprintf("%s://%s%s", u.Scheme, u.Host, token), nil
 }
 
 // VerifyURL verifies a signed url and returns true if it is valid,
 // false if it is not. Note that http:// and https:// are stripped off
 // before verification
 func (s *Signature) VerifyURL(data string) (bool, error) {
-	_, err := url.ParseRequestURI(data)
+	u, err := url.ParseRequestURI(data)
 	if err != nil {
 		return false, err
 	}
-	ex := strings.Split(data, "//")
-	exploded := strings.Split(ex[1], "/")
-	exploded[0] = ""
-	stringToVerify := strings.Join(exploded, "")
+	q := ""
+	if u.RawQuery != "" {
+		q = "?"
+	}
+	stringToVerify := fmt.Sprintf("%s%s%s", u.Path, q, u.RawQuery)
 
 	pen := danger.New([]byte(s.Secret), danger.Timestamp)
 
