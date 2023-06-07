@@ -18,7 +18,7 @@ var signTests = []struct {
 		hasError: false,
 	},
 	{
-		name:     "signable query params",
+		name:     "signable long path query params",
 		url:      "https://example.com/password/reset/finish?email=my@email.com",
 		validUrl: true,
 		hasError: false,
