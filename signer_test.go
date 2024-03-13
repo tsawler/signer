@@ -129,12 +129,29 @@ func TestSignature_Expired(t *testing.T) {
 
 	expired := sign.Expired(signed, 1)
 
-	if expired {
+	if !expired {
 		t.Error("token shows expired when it should not")
 	}
 
 	expired = sign.Expired(signed, -1)
+	if expired {
+		t.Error("token shows that it is not expired when it should be")
+	}
+}
+
+func TestSignature_ExpiredSeconds(t *testing.T) {
+	sign := Signature{Secret: "abc123"}
+
+	signed, _ := sign.SignURL("http://example.com/test?id=1")
+
+	expired := sign.ExpiredSeconds(signed, 1)
+
 	if !expired {
+		t.Error("token shows expired when it should not")
+	}
+
+	expired = sign.ExpiredSeconds(signed, -1)
+	if expired {
 		t.Error("token shows that it is not expired when it should be")
 	}
 }

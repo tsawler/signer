@@ -73,13 +73,24 @@ func (s *Signature) VerifyURL(data string) (bool, error) {
 
 }
 
-// Expired checks to see if a token has expired. It returns true if
-// the token was created within minutesUntilExpire, and false otherwise.
+// Expired checks to see if a token has expired. It returns false if
+// the token was created within minutesUntilExpire, and true otherwise.
 func (s *Signature) Expired(data string, minutesUntilExpire int) bool {
 	exploded := strings.Split(data, "//")
 
 	pen := danger.New([]byte(s.Secret), danger.Timestamp)
 	ts := pen.Parse([]byte(exploded[1]))
 
-	return time.Since(ts.Timestamp) > time.Duration(minutesUntilExpire)*time.Minute
+	return time.Since(ts.Timestamp) < time.Duration(minutesUntilExpire)*time.Minute
+}
+
+// ExpiredSeconds checks to see if a token has expired. It returns false if
+// the token was created within secondsUntilExpire, and true otherwise.
+func (s *Signature) ExpiredSeconds(data string, secondsUntilExpire int) bool {
+	exploded := strings.Split(data, "//")
+
+	pen := danger.New([]byte(s.Secret), danger.Timestamp)
+	ts := pen.Parse([]byte(exploded[1]))
+
+	return time.Since(ts.Timestamp) < time.Duration(secondsUntilExpire)*time.Second
 }
