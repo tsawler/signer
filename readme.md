@@ -51,5 +51,9 @@ func main() {
 	// You can also check for expiry. Here, the signed url expires after 30 minutes.
 	expired := sign.Expired(signed, 30)
 	fmt.Println("Expired:", expired)
+
+	// You can also check for expiry in seconds. Here, the signed url expires after 30 seconds.
+	expired = sign.ExpiredSeconds(signed, 30)
+	fmt.Println("Expired:", expired)
 }
 ```
