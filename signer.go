@@ -47,7 +47,7 @@ func (s *Signature) SignURL(data string) (string, error) {
 
 // VerifyURL verifies a signed url and returns true if it is valid,
 // false if it is not. Note that http:// and https:// are stripped off
-// before verification
+// before verification.
 func (s *Signature) VerifyURL(data string) (bool, error) {
 	u, err := url.ParseRequestURI(data)
 	if err != nil {
