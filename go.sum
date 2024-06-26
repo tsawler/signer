@@ -9,6 +9,8 @@ github.com/tsawler/itsdangerous v1.0.1 h1:RSaqEu6orO0Ok85KePHOpAgPgGd0GFRHWa65Vr
 github.com/tsawler/itsdangerous v1.0.1/go.mod h1:oV6RuJKMko73/wBhQ/3CQvK6wSLdJFCVNSYYbebKEQY=
 github.com/tsawler/itsdangerous v1.0.2 h1:PPkVdhMzpqaLi+YX7leoEnb3lSwFa5EqvYB91gOWDuQ=
 github.com/tsawler/itsdangerous v1.0.2/go.mod h1:w1OM/U2AXjZDX+GEM3mwOb/kd9EbDczEveD0QCHPSEc=
+github.com/tsawler/itsdangerous v1.0.3 h1:l2ewkdoSJ1bHhORhk4IP8FhrFdf1wIplj2yvZnJ76hM=
+github.com/tsawler/itsdangerous v1.0.3/go.mod h1:2eAbMqki2ApvzLhBFb+Rfw9tTG8OeX+s46SXrtJ9JKM=
 golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.5.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.7.0 h1:3jlCCIQZPdOYu1h8BkNvLz8Kgwtae2cagcG/VamtZRU=

@@ -2,7 +2,7 @@ module github.com/tsawler/signer
 
 go 1.18
 
-require github.com/tsawler/itsdangerous v1.0.2
+require github.com/tsawler/itsdangerous v1.0.3
 
 require (
 	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
