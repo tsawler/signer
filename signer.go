@@ -16,7 +16,7 @@ type Signature struct {
 
 // SignURL generates a signed url and returns it, stripping off http:// and https://.
 func (s *Signature) SignURL(data string) (string, error) {
-	// verify this is a url
+	// Verify that the string is a url.
 	u, err := url.ParseRequestURI(data)
 	if err != nil {
 		return "", err
